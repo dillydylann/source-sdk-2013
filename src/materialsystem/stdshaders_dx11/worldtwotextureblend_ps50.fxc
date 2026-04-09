@@ -6,7 +6,6 @@
 //
 //=============================================================================//
 // STATIC: "CONVERT_TO_SRGB"				"0..1"	[ps20b][= g_pHardwareConfig->NeedsShaderSRGBConversion()] [PC]
-// STATIC: "CONVERT_TO_SRGB"				"0..0"	[= 0] [XBOX]
 // STATIC: "DETAILTEXTURE"					"0..1"
 // STATIC: "BUMPMAP"						"0..1"
 // STATIC: "VERTEXCOLOR"					"0..1"
@@ -16,12 +15,10 @@
 // STATIC: "FLASHLIGHT"						"0..1"
 // STATIC: "SEAMLESS"						"0..1"
 // STATIC: "FLASHLIGHTDEPTHFILTERMODE"		"0..2"	[ps20b] [PC]
-// STATIC: "FLASHLIGHTDEPTHFILTERMODE"		"0..0"	[ps20b] [XBOX]
 
 // DYNAMIC: "WRITEWATERFOGTODESTALPHA"		"0..1"
 // DYNAMIC: "PIXELFOGTYPE"					"0..2"
 // DYNAMIC: "WRITE_DEPTH_TO_DESTALPHA"		"0..1" [ps20b] [PC]
-// DYNAMIC: "WRITE_DEPTH_TO_DESTALPHA"		"0..0" [ps20b] [XBOX]
 // DYNAMIC: "FLASHLIGHTSHADOWS"				"0..1" [ps20b]
 
 //	SKIP: $DETAILTEXTURE && ( $BUMPMAP && !$DETAIL_ALPHA_MASK_BASE_TEXTURE )

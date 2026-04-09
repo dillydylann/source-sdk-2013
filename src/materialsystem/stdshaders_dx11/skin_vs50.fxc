@@ -7,7 +7,6 @@
 //	DYNAMIC: "DOWATERFOG"				"0..1"
 //	DYNAMIC: "SKINNING"					"0..1"
 //  DYNAMIC: "LIGHTING_PREVIEW"			"0..1" [PC]
-//  DYNAMIC: "LIGHTING_PREVIEW"			"0..0" [XBOX]
 //  DYNAMIC: "MORPHING"					"0..1" [vs30]
 //  DYNAMIC: "NUM_LIGHTS"				"0..2" [vs20]
 
@@ -66,7 +65,7 @@ struct VS_OUTPUT
 {
 	// Stuff that isn't seen by the pixel shader
 	float4 projPos					: SV_Position;	
-#if !defined( _X360 )    
+#if 1
 	float  fog						: FOG;
 #endif
 	// Stuff that is seen by the pixel shader
@@ -124,7 +123,7 @@ VS_OUTPUT main( const VS_INPUT v )
 
 	o.projPos_fWrinkleWeight.xyz = vProjPos.xyz;
 
-#if !defined( _X360 )
+#if 1
 	o.fog = CalcFog( worldPos, vProjPos.xyz, g_FogType );
 #endif
 	// Needed for water fog alpha and diffuse lighting 

@@ -43,7 +43,7 @@ struct VS_INPUT
 struct VS_OUTPUT
 {
     float4 projPos					: SV_Position;
-#if !defined( _X360 )
+#if 1
 	float  fog						: FOG;
 #endif
 
@@ -101,7 +101,7 @@ VS_OUTPUT main( const VS_INPUT v )
 	o.worldPos_worldTransition = float4( worldPos.xyz, 1.0f );
 
 	o.fogFactorW = CalcFog( worldPos, projPos, g_FogType );
-#if !defined( _X360 )
+#if 1
 	o.fog = o.fogFactorW.w;
 #endif
 

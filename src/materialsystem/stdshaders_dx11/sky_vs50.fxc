@@ -19,7 +19,6 @@ struct VS_OUTPUT
 {
     float4 projPos					: SV_Position;
     
-//#if defined( _X360 )
 //	float2 baseTexCoord		: TEXCOORD0;
 //#else
 	float2 baseTexCoord00 : TEXCOORD0;
@@ -41,7 +40,6 @@ VS_OUTPUT main( const VS_INPUT v )
 	vTexCoord.x = dot( vTexCoordInput.xyzw, g_mBaseTexCoordTransform[0] );
 	vTexCoord.y = dot( vTexCoordInput.xyzw, g_mBaseTexCoordTransform[1] );
 
-//#if defined( _X360 )
 //	o.baseTexCoord.xy = vTexCoord.xy;
 //#else
 	// Compute quantities needed for pixel shader texture lerping

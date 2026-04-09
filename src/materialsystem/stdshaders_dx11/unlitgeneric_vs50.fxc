@@ -38,7 +38,7 @@ struct VS_OUTPUT
 	float4 vColor		: COLOR0;
 	float4 fogFactorW	: COLOR1;
 
-#if !defined( _X360 )    
+#if 1
 	float  fog		: FOG;
 #endif
 
@@ -67,7 +67,7 @@ VS_OUTPUT main( const VS_INPUT v )
 	// Fog
 	//------------------------------------------------------------------------------
 	o.fogFactorW = CalcFog( worldPos, vProjPos, g_FogType );
-#if !defined( _X360 )
+#if 1
 	o.fog = o.fogFactorW;
 #endif
 

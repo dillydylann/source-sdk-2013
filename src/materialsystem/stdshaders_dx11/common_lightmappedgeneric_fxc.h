@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 
 
-#if defined( _X360 )
+#if 0
 
 void GetBaseTextureAndNormal( sampler base, sampler base2, sampler bump, bool bBase2, bool bBump, float3 coords, float3 vWeights,
 								out float4 vResultBase, out float4 vResultBase2, out float4 vResultBump )
@@ -194,7 +194,7 @@ float h1(float a) {
 
 float3 LightMapSample( sampler LightmapSampler, float2 vTexCoord )
 {
-#	if ( !defined( _X360 ) || !defined( USE_32BIT_LIGHTMAPS_ON_360 ) )
+#	if 1
 	{
 #if BICUBIC_LIGHTMAP
 		float flLightmapPageWidth = 1024;

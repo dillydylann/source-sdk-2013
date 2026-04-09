@@ -23,7 +23,7 @@ float DoShadow( sampler DepthSampler, float4 texCoord )
 										tex2D( DepthSampler, projTexCoord - uoffset + voffset ).x,
 										tex2D( DepthSampler, projTexCoord - uoffset - voffset ).x	);
 
-#	if ( defined( REVERSE_DEPTH_ON_X360 ) )
+#	if 0
 	{
 		flashlightDepth = 1.0f - flashlightDepth;
 	}
@@ -349,7 +349,7 @@ TODO: Fix this contact hardening stuff
 	return fResult;
 }
 
-#if defined( _X360 )
+#if 0
 
 // Poisson disc, randomly rotated at different UVs
 float DoShadow360Simple( sampler DepthSampler, const float3 vProjCoords )
@@ -358,7 +358,7 @@ float DoShadow360Simple( sampler DepthSampler, const float3 vProjCoords )
 	float2 shadowMapCenter = vProjCoords.xy;			// Center of shadow filter
 	float objDepth = min( vProjCoords.z, 0.99999 );		// Object depth in shadow space
 
-#if defined( REVERSE_DEPTH_ON_X360 )
+#if 0
 	objDepth = 1.0f - objDepth;
 #endif	
 
@@ -378,7 +378,7 @@ float DoShadow360Simple( sampler DepthSampler, const float3 vProjCoords )
 
 	vWeights = float4( (1-vWeights.x)*(1-vWeights.y), vWeights.x*(1-vWeights.y), (1-vWeights.x)*vWeights.y, vWeights.x*vWeights.y );
 
-#if defined( REVERSE_DEPTH_ON_X360 )
+#if 0
 	float4 vCompare = (vSampledDepths < objDepth.xxxx);
 #else
 	float4 vCompare = (vSampledDepths > objDepth.xxxx);
@@ -407,7 +407,7 @@ float Do360PCFFetch( sampler DepthSampler, float2 tc, float objDepth )
 
 	vWeights = float4( (1-vWeights.x)*(1-vWeights.y), vWeights.x*(1-vWeights.y), (1-vWeights.x)*vWeights.y, vWeights.x*vWeights.y );
 
-#if defined( REVERSE_DEPTH_ON_X360 )
+#if 0
 	float4 vCompare = (vSampledDepths < objDepth.xxxx);
 #else
 	float4 vCompare = (vSampledDepths > objDepth.xxxx);
@@ -430,7 +430,7 @@ float Do360NearestFetch( sampler DepthSampler, float2 tc, float objDepth )
 		tfetch2D vSampledDepth.x___, tc, DepthSampler, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
 	};
 
-#if defined( REVERSE_DEPTH_ON_X360 )
+#if 0
 	return (vSampledDepth.x < objDepth.x);
 #else
 	return (vSampledDepth.x > objDepth.x);
@@ -480,7 +480,7 @@ float AmountShadowed_8Tap_360( sampler DepthSampler, float2 tc, float objDepth )
 			tfetch2D vSampledDepthsB.___x, tc, DepthSampler, OffsetX =  2.0, OffsetY =  1.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
 	};
 
-#if defined( REVERSE_DEPTH_ON_X360 )
+#if 0
 	float4 vCompareA = (vSampledDepthsA < objDepth.xxxx);
 	float4 vCompareB = (vSampledDepthsB < objDepth.xxxx);
 #else
@@ -508,7 +508,7 @@ float AmountShadowed_4Tap_360( sampler DepthSampler, float2 tc, float objDepth )
 			tfetch2D vSampledDepths.___x, tc, DepthSampler, OffsetX =  1.0, OffsetY = -0.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
 	};
 
-#if defined( REVERSE_DEPTH_ON_X360 )
+#if 0
 	float4 vCompare = (vSampledDepths < objDepth.xxxx);
 #else
 	float4 vCompare = (vSampledDepths > objDepth.xxxx);
@@ -528,7 +528,7 @@ float DoShadowPoisson360( sampler DepthSampler, sampler RandomRotationSampler, c
 	float2 shadowMapCenter = vProjCoords.xy;		// Center of shadow filter
 	float objDepth = min( vProjCoords.z, 0.99999 );	// Object depth in shadow space
 
-#if defined( REVERSE_DEPTH_ON_X360 )
+#if 0
 	objDepth = 1.0f - objDepth;
 #endif
 
@@ -592,14 +592,14 @@ float DoShadowPoisson360( sampler DepthSampler, sampler RandomRotationSampler, c
 	}
 }
 
-#endif // _X360
+#endif
 
 
 float DoFlashlightShadow( sampler DepthSampler, sampler RandomRotationSampler, float3 vProjCoords, float2 vScreenPos, int nShadowLevel, float4 vShadowTweaks, bool bAllowHighQuality )
 {
 	float flShadow = 1.0f;
 
-#if !defined( _X360 ) //PC
+#if 1
 	if( nShadowLevel == NVIDIA_PCF_POISSON )
 		flShadow = DoShadowPoisson16Sample( DepthSampler, RandomRotationSampler, vProjCoords, vScreenPos, vShadowTweaks, true, false );
 	else if( nShadowLevel == ATI_NOPCF )
@@ -661,7 +661,7 @@ void DoSpecularFlashlight( float3 flashlightPos, float3 worldPos, float4 flashli
 	float3 vProjCoords = flashlightSpacePosition.xyz / flashlightSpacePosition.w;
 	float3 flashlightColor = float3(1,1,1);
 
-#if ( defined( _X360 ) )
+#if 0
 
 	float3 ltz = vProjCoords.xyz < float3( 0.0f, 0.0f, 0.0f );
 	float3 gto = vProjCoords.xyz > float3( 1.0f, 1.0f, 1.0f );
@@ -737,7 +737,7 @@ float3 DoFlashlight( float3 flashlightPos, float3 worldPos, float4 flashlightSpa
 	float3 vProjCoords = flashlightSpacePosition.xyz / flashlightSpacePosition.w;
 	float3 flashlightColor = float3(1,1,1);
 
-#if ( defined( _X360 ) )
+#if 0
 
 	float3 ltz = vProjCoords.xyz < float3( 0.0f, 0.0f, 0.0f );
 	float3 gto = vProjCoords.xyz > float3( 1.0f, 1.0f, 1.0f );

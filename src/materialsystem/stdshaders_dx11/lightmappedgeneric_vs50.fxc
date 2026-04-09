@@ -7,12 +7,10 @@
 //  STATIC: "RELIEF_MAPPING"            "0..0"
 //  STATIC: "SEAMLESS"                  "0..1"
 //  STATIC: "BUMPMASK"                  "0..1"
-//	STATIC: "FLASHLIGHT"				"0..1"	[XBOX]
 
 //  DYNAMIC: "FASTPATH"					"0..1"
 //	DYNAMIC: "DOWATERFOG"				"0..1"
 //  DYNAMIC: "LIGHTING_PREVIEW"			"0..1"	[PC]
-//  DYNAMIC: "LIGHTING_PREVIEW"			"0..0"	[XBOX]
 
 // This should not be a combo since I'm a moron with the tangent space and the flashlight.
 //  SKIP: !$BUMPMAP && $DIFFUSEBUMPMAP
@@ -58,7 +56,7 @@ struct VS_INPUT
 struct VS_OUTPUT
 {
     float4 projPos					: SV_Position;	
-#if !defined( _X360 )    
+#if 1
 	float  fog						: FOG;
 #endif
 
@@ -78,7 +76,7 @@ struct VS_OUTPUT
 	float4 lightmapTexCoord3		: TEXCOORD3;			// and basetexcoord*mask_scale
 	float4 worldPos_projPosZ		: TEXCOORD4;
 
-#if TANGENTSPACE || (LIGHTING_PREVIEW) || defined( _X360 )
+#if TANGENTSPACE || LIGHTING_PREVIEW
 	float3x3 tangentSpaceTranspose	: TEXCOORD5;	// and 6 and 7
 #endif
 
@@ -86,7 +84,7 @@ struct VS_OUTPUT
 	float4 vertexBlendX_fogFactorW	: COLOR1;
 
 	// Extra iterators on 360, used in flashlight combo
-#if defined( _X360 )
+#if 0
 #if FLASHLIGHT
 	float4 flashlightSpacePos		: TEXCOORD8;
 	float4 vProjPos					: TEXCOORD9;
@@ -112,11 +110,11 @@ VS_OUTPUT main( const VS_INPUT v )
 	
 	float3 worldNormal = mul( vObjNormal, ( float3x3 )cModel[0] );
 	
-#if TANGENTSPACE || (LIGHTING_PREVIEW) || defined( _X360 )
+#if TANGENTSPACE || LIGHTING_PREVIEW
 	float3 worldTangentS = mul( v.vTangentS, ( const float3x3 )cModel[0] );
 	float3 worldTangentT = mul( v.vTangentT, ( const float3x3 )cModel[0] );
 
-	#if SEAMLESS && BUMPMAP && defined( _X360 )
+	#if 0
 		float3 n = normalize( worldNormal );
 		float3 n2 = n * n;           // sums to 1.
 
@@ -206,7 +204,7 @@ VS_OUTPUT main( const VS_INPUT v )
 #endif
 
 	o.vertexBlendX_fogFactorW = CalcFog( worldPos, vProjPos, g_FogType );
-#if !defined( _X360 )
+#if 1
 	o.fog = o.vertexBlendX_fogFactorW;
 #endif
 
@@ -238,7 +236,7 @@ VS_OUTPUT main( const VS_INPUT v )
 #endif
 
 // On 360, we have extra iterators and can fold the flashlight into this shader
-#if defined( _X360 )
+#if 0
 	#if FLASHLIGHT
 		o.flashlightSpacePos = mul( float4( worldPos, 1.0f ), g_FlashlightWorldToTexture );
 		o.vProjPos = vProjPos;

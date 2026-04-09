@@ -70,7 +70,7 @@ struct VS_INPUT
 struct VS_OUTPUT
 {
     float4 projPos					: SV_Position;	
-#if !defined( _X360 )
+#if 1
 	float  fog						: FOG;
 #endif
 
@@ -126,7 +126,7 @@ VS_OUTPUT main( const VS_INPUT v )
 	o.projPos = projPos;
 	projPos.z = mul( float4( worldPos, 1 ), cViewProjZ );
 	o.fogFactorW = CalcFog( worldPos, projPos, g_FogType );
-#if !defined( _X360 )
+#if 1
 	o.fog = o.fogFactorW;
 #endif
  	// Needed for water fog alpha and diffuse lighting 

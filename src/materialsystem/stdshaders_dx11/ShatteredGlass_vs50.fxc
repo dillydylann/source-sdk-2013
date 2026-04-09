@@ -20,7 +20,7 @@ struct VS_INPUT
 struct VS_OUTPUT
 {
     float4 projPos					: SV_Position;	
-#if !defined( _X360 )
+#if 1
 	float  fog						: FOG;
 #endif
 	float2 baseTexCoord				: TEXCOORD0;
@@ -59,7 +59,7 @@ VS_OUTPUT main( const VS_INPUT v )
 	
 
 	o.fogFactorW = CalcFog( o.worldPos_projPosZ.xyz, projPos, g_FogType );
-#if !defined( _X360 )
+#if 1
 	o.fog = o.fogFactorW;
 #endif	
 	o.vertexColor = cModulationColor;

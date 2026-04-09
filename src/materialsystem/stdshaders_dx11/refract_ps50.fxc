@@ -3,7 +3,6 @@
 //=============================================================================
 
 // STATIC: "CONVERT_TO_SRGB"				"0..1"	[ps20b][= g_pHardwareConfig->NeedsShaderSRGBConversion()] [PC]
-// STATIC: "CONVERT_TO_SRGB"				"0..0"	[= 0] [XBOX]
 // STATIC: "BLUR"							"0..1"
 // STATIC: "FADEOUTONSILHOUETTE"			"0..1"
 // STATIC: "CUBEMAP"						"0..1"
@@ -11,13 +10,11 @@
 // STATIC: "MASKED"							"0..1"
 // STATIC: "COLORMODULATE"					"0..1"
 // STATIC: "SECONDARY_NORMAL"				"0..1"
-// STATIC: "NORMAL_DECODE_MODE"				"0..0"	[XBOX]
 // STATIC: "NORMAL_DECODE_MODE"				"0..0"	[PC]
 // STATIC: "SHADER_SRGB_READ"				"0..1"	[ps20b]
 
 // DYNAMIC: "PIXELFOGTYPE"					"0..2"
 // DYNAMIC: "WRITE_DEPTH_TO_DESTALPHA"		"0..1"	[ps20b] [PC]
-// DYNAMIC: "WRITE_DEPTH_TO_DESTALPHA"		"0..0"	[ps20b] [XBOX]
 
 // SKIP: $MASKED && $BLUR
 

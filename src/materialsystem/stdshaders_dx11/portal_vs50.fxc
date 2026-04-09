@@ -37,7 +37,7 @@ struct VS_OUTPUT
 #		endif
 #	endif
 
-#	if !defined( _X360  )
+#	if 1
 		float vFog						: FOG;
 #	endif
 
@@ -67,7 +67,7 @@ VS_OUTPUT main( const VS_INPUT v )
 	vTextureProjectedPos = o.vProjPos;
 #endif
 	
-#if !defined( _X360 )
+#if 1
 	o.vFog = CalcFog( worldPos, o.vProjPos.xyz, FOGTYPE_RANGE );
 #endif
 	o.worldPos_projPosZ = float4( worldPos.xyz, o.vProjPos.z );

@@ -44,8 +44,7 @@ static const HALF3 bumpBasisTranspose[3] = {
 	HALF3(  OO_SQRT_3, OO_SQRT_3, OO_SQRT_3 )
 };
 
-#if defined( _X360 )
-#define REVERSE_DEPTH_ON_X360 //uncomment to use D3DFMT_D24FS8 with an inverted depth viewport for better performance. Keep this in sync with the same named #define in public/shaderapi/shareddefs.h
+#if 0
 //Note that the reversal happens in the viewport. So ONLY reading back from a depth texture should be affected. Projected math is unaffected.
 #endif
 
@@ -126,7 +125,7 @@ void ComputeBumpedLightmapCoordinates( HALF4 Lightmap1and2Coord, HALF2 Lightmap3
 
 float3 mul3x3(float3 v, float3x3 m)
 {
-#if !defined( _X360 )
+#if 1
     return float3(dot(v, transpose(m)[0]), dot(v, transpose(m)[1]), dot(v, transpose(m)[2]));
 #else
 	// xbox360 fxc.exe (new back end) borks with transposes, generates bad code
@@ -136,7 +135,7 @@ float3 mul3x3(float3 v, float3x3 m)
 
 float3 mul4x3(float4 v, float4x3 m)
 {
-#if !defined( _X360 )
+#if 1
 	return float3(dot(v, transpose(m)[0]), dot(v, transpose(m)[1]), dot(v, transpose(m)[2]));
 #else
 	// xbox360 fxc.exe (new back end) borks with transposes, generates bad code
@@ -214,8 +213,8 @@ float SrgbLinearToGamma( float flLinearValue )
 	return ( x <= 0.0031308f ) ? ( x * 12.92f ) : ( 1.055f * pow( x, ( 1.0f / 2.4f ) ) ) - 0.055f;
 }
 
-// These twofunctions use the XBox 360's exact piecewise linear algorithm
-float X360GammaToLinear( float fl360GammaValue )
+// These two functions use the legacy piecewise linear algorithm
+float PiecewiseGammaToLinear( float fl360GammaValue )
 {
 	float flLinearValue;
 
@@ -252,7 +251,7 @@ float X360GammaToLinear( float fl360GammaValue )
 	return flLinearValue;
 }
 
-float X360LinearToGamma( float flLinearValue )
+float PiecewiseLinearToGamma( float flLinearValue )
 {
 	float fl360GammaValue;
 
@@ -291,7 +290,7 @@ float X360LinearToGamma( float flLinearValue )
 float SrgbGammaTo360Gamma( float flSrgbGammaValue )
 {
 	float flLinearValue = SrgbGammaToLinear( flSrgbGammaValue );
-	float fl360GammaValue = X360LinearToGamma( flLinearValue );
+	float fl360GammaValue = PiecewiseLinearToGamma( flLinearValue );
 	return fl360GammaValue;
 }
 

@@ -125,7 +125,7 @@ VS_OUTPUT main( const VS_INPUT v )
 
 	// Compute fog based on the position
 	float3 vWorldPos = mul( v.vPos, cModel[0] );
-#if !defined( _X360 )
+#if 1
 	o.fFog = CalcFog( vWorldPos, vProjPos, FOGTYPE_RANGE );
 #endif
 

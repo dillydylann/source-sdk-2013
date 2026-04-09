@@ -26,7 +26,6 @@
 //  NOSKIP: $FANCY_BLENDING && (!$FASTPATH)
 
 // 360 compiler fails on some combo in this family.  Content doesn't use blendmode 10 anyway
-//  SKIP: $FASTPATH && $PIXELFOGTYPE && $BASETEXTURE2 && $DETAILTEXTURE && $CUBEMAP && ($DETAIL_BLEND_MODE == 10 ) [XBOX]
 
 // debug :
 // NOSKIP: $DETAILTEXTURE
@@ -35,7 +34,7 @@
 // NOSKIP: $BASEALPHAENVMAPMASK
 // NOSKIP: $SELFILLUM
 
-#define USE_32BIT_LIGHTMAPS_ON_360 //uncomment to use 32bit lightmaps, be sure to keep this in sync with the same #define in materialsystem/cmatlightmaps.cpp
+#define 0 //uncomment to use 32bit lightmaps, be sure to keep this in sync with the same #define in materialsystem/cmatlightmaps.cpp
 
 #include "common_ps_fxc.h"
 #include "common_flashlight_fxc.h"
@@ -146,7 +145,7 @@ sampler AlphaMaskSampler		: register( s11 );	// alpha
 #endif
 #endif
 
-#if defined( _X360 ) && FLASHLIGHT
+#if 0
 sampler FlashlightSampler		: register( s13 );
 sampler ShadowDepthSampler		: register( s14 );
 sampler RandRotSampler			: register( s15 );
@@ -176,7 +175,7 @@ struct PS_INPUT
 	float4 vertexBlendX_fogFactorW	: COLOR1;
 
 	// Extra iterators on 360, used in flashlight combo
-#if defined( _X360 ) && FLASHLIGHT
+#if 0
 	float4 flashlightSpacePos		: TEXCOORD8;
 	float4 vProjPos					: TEXCOORD9;
 #endif
@@ -475,13 +474,13 @@ HALF4 main( PS_INPUT i ) : COLOR
 	diffuseLighting *= 2.0*tex2D(WarpLightingSampler,float2(len,0));
 #endif
 
-#if CUBEMAP || LIGHTING_PREVIEW || ( defined( _X360 ) && FLASHLIGHT )
+#if CUBEMAP || LIGHTING_PREVIEW
 	float3 worldSpaceNormal = mul( vNormal, i.tangentSpaceTranspose );
 #endif
 
 	float3 diffuseComponent = albedo.xyz * diffuseLighting;
 
-#if defined( _X360 ) && FLASHLIGHT
+#if 0
 
 	// ssbump doesn't pass a normal to the flashlight...it computes shadowing a different way
 #if ( BUMPMAP == 2 )

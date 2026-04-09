@@ -37,7 +37,7 @@
 
 // System defined pixel shader constants
 
-#if defined( _X360 )
+#if 0
 const bool g_bHighQualityShadows : register( b0 );
 #endif
 
@@ -765,7 +765,6 @@ float3 TextureCombinePostLighting( float3 lit_baseColor, float4 detailColor, int
 	return lit_baseColor;
 }
 
-//NOTE: On X360. fProjZ is expected to be pre-reversed for cheaper math here in the pixel shader
 float DepthFeathering( sampler DepthSampler, const float2 vScreenPos, float fProjZ, float fProjW, float4 vDepthBlendConstants )
 {
 #	if ( !(defined(SHADER_MODEL_PS_1_1) || defined(SHADER_MODEL_PS_1_4) || defined(SHADER_MODEL_PS_2_0)) ) //minimum requirement of ps2b
@@ -775,14 +774,14 @@ float DepthFeathering( sampler DepthSampler, const float2 vScreenPos, float fPro
 #define flSceneDepth flDepths.x
 #define flSpriteDepth flDepths.y
 
-#		if ( defined( _X360 ) )
+#		if 0
 		{
 			//Get depth from the depth texture. Need to sample with the offset of (0.5, 0.5) to fix rounding errors
 			asm {
 				tfetch2D flDepths.x___, vScreenPos, DepthSampler, OffsetX=0.5, OffsetY=0.5, MinFilter=point, MagFilter=point, MipFilter=point
 			};
 
-#			if(	!defined( REVERSE_DEPTH_ON_X360 ) )
+#			if 1
 				flSceneDepth = 1.0f - flSceneDepth;
 #			endif
 

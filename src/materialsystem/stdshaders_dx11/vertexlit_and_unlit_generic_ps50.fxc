@@ -20,7 +20,6 @@
 // STATIC: "OUTER_GLOW"                 "0..1"
 // STATIC: "FLASHLIGHTDEPTHFILTERMODE"	"0..2"	[ps20b] [PC]
 // STATIC: "FLASHLIGHTDEPTHFILTERMODE"	"0..2"	[ps30]  [PC]
-// STATIC: "FLASHLIGHTDEPTHFILTERMODE"	"0..0"	[ps20b] [XBOX]
 // STATIC: "DEPTHBLEND"					"0..1"	[ps20b] [ps30]
 // STATIC: "BLENDTINTBYBASEALPHA"       "0..1"
 // STATIC: "SRGB_INPUT_ADAPTER"			"0..1"	[ps20b]
@@ -28,7 +27,6 @@
 
 // DYNAMIC: "PIXELFOGTYPE"				"0..2"
 // DYNAMIC: "LIGHTING_PREVIEW"          "0..2"	[PC]
-// DYNAMIC: "LIGHTING_PREVIEW"          "0..0"	[XBOX]
 // DYNAMIC: "FLASHLIGHTSHADOWS"			"0..1"	[ps20b]
 // DYNAMIC: "FLASHLIGHTSHADOWS"			"0..1"	[ps30]
 // DYNAMIC: "STATIC_LIGHT_LIGHTMAP"	    "0..1"  [ps20b] [ps30]
@@ -69,7 +67,6 @@
 // BlendTintByBaseAlpha is incompatible with other interpretations of alpha
 // SKIP: ($BLENDTINTBYBASEALPHA) && ($SELFILLUM || (($DISTANCEALPHA) && ($DISTANCEALPHAFROMDETAIL == 0)) || $BASEALPHAENVMAPMASK)
 
-// Only _XBOX allows flashlight and cubemap in the current implementation
 // SKIP: $FLASHLIGHT && $CUBEMAP [PC]
 
 // SKIP: $CUBEMAP_SPHERE_LEGACY && ($CUBEMAP == 0)
@@ -129,7 +126,7 @@ struct PS_INPUT
 	float3 worldVertToEyeVector		: TEXCOORD3;	// Necessary for reflection
 	float3 worldSpaceNormal			: TEXCOORD4;	// Necessary for cubemaps and flashlight
 
-#if defined ( _X360 )
+#if 0
 #if FLASHLIGHT
 	float4 flashlightSpacePos		: TEXCOORD5;
 #endif
@@ -388,7 +385,7 @@ float4 main( PS_INPUT i ) : SV_Target
 		bDoShadows = true;
 #endif
 
-#if defined ( _X360 )
+#if 0
 		float4 flashlightSpacePosition = i.flashlightSpacePos;
 #else
 		float4 flashlightSpacePosition = mul( float4( i.worldPos_projPosZ.xyz, 1.0f ), g_FlashlightWorldToTexture );
@@ -404,7 +401,7 @@ float4 main( PS_INPUT i ) : SV_Target
 			g_FlashlightAttenuationFactors.w, FlashlightSampler, ShadowDepthSampler,
 			RandRotSampler, nShadowSampleLevel, bDoShadows, false, i.projPos.xy / i.projPos.w, false, g_EnvmapContrast_ShadowTweaks, bUseWorldNormal );
 
-#if defined ( _X360 )
+#if 0
 		diffuseLighting += flashlightColor;
 #else
 		diffuseLighting = flashlightColor;
@@ -427,7 +424,7 @@ float4 main( PS_INPUT i ) : SV_Target
 
 	HALF3 specularLighting = HALF3( 0.0f, 0.0f, 0.0f );
 
-#if !FLASHLIGHT || defined ( _X360 )
+#if !FLASHLIGHT
 	#if SELFILLUM_ENVMAPMASK_ALPHA
 		// range of alpha:
 	    // 0 - 0.125 = lerp(diffuse,selfillum,alpha*8)

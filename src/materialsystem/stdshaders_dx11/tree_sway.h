@@ -52,7 +52,7 @@
 		}
 		#endif
 
-		#ifdef _X360
+		#if def
 			// Scale branch motion based on how orthogonal they are
 			float flOrthoBranchScale = 1.0 - abs( dot( normalize( vWindDirAndIntensityOS.xyz ), float3( normalize( vPositionOS.xy ), 0 ) ) );
 		#else

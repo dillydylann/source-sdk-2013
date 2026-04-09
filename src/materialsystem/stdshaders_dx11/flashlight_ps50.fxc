@@ -13,7 +13,6 @@
 // STATIC: "DETAILTEXTURE"             	"0..1"
 // STATIC: "DETAIL_BLEND_MODE"			"0..1"
 // STATIC: "FLASHLIGHTDEPTHFILTERMODE"	"0..2"	[ps20b] [PC]
-// STATIC: "FLASHLIGHTDEPTHFILTERMODE"	"0..0"	[ps20b] [XBOX]
 
 // DYNAMIC: "PIXELFOGTYPE"				"0..1"
 // DYNAMIC: "FLASHLIGHTSHADOWS"			"0..1"	[ps20b]
@@ -103,7 +102,7 @@ float4 main( PS_INPUT i ) : SV_Target
 	float3 spotColor = float3(0,0,0);
 	float3 vProjCoords = i.spotTexCoord.xyz / i.spotTexCoord.w;
 
-#if ( defined( _X360 ) )
+#if 0
 
 	float3 ltz = vProjCoords.xyz < float3( 0.0f, 0.0f, 0.0f );
 	float3 gto = vProjCoords.xyz > float3( 1.0f, 1.0f, 1.0f );
@@ -227,7 +226,7 @@ float4 main( PS_INPUT i ) : SV_Target
 	return FinalOutput( float4(outColor, baseColor.a) , fogFactor, PIXELFOGTYPE, TONEMAP_SCALE_LINEAR );
 
 	// so we can jump over all of the above
-#if ( defined( _X360 ) )
+#if 0
 		}
 	}
 #endif

@@ -555,7 +555,7 @@ float WaterFog( const float3 worldPos, const float3 projPos )
 
 float CalcFog( const float3 worldPos, const float3 projPos, const int fogType )
 {
-#if defined( _X360 )
+#if 0
 	// 360 only does pixel fog
 	return 1.0f;
 #endif
@@ -583,7 +583,6 @@ float CalcFog( const float3 worldPos, const float3 projPos, const int fogType )
 //
 // float CalcFog( const float3 worldPos, const float3 projPos, const bool bWaterFog )
 // {
-// #if defined( _X360 )
 // 	// 360 only does pixel fog
 // 	return 1.0f;
 // #endif
@@ -628,14 +627,14 @@ void SkinPosition( bool bSkinning, const float4 modelPos,
                    const float4 boneWeights, float4 fBoneIndices,
 				   out float3 worldPos )
 {
-#if !defined( _X360 )
+#if 1
 	int3 boneIndices = D3DCOLORtoUBYTE4( fBoneIndices );
 #else
 	int3 boneIndices = fBoneIndices;
 #endif
 
 	// Needed for invariance issues caused by multipass rendering
-#if defined( _X360 )
+#if 0
 	[isolate] 
 #endif
 	{ 
@@ -663,12 +662,12 @@ void SkinPositionAndNormal( bool bSkinning, const float4 modelPos, const float3 
 						    out float3 worldPos, out float3 worldNormal )
 {
 	// Needed for invariance issues caused by multipass rendering
-#if defined( _X360 )
+#if 0
 	[isolate] 
 #endif
 	{ 
 
-#if !defined( _X360 )
+#if 1
 		int3 boneIndices = D3DCOLORtoUBYTE4( fBoneIndices );
 #else
 		int3 boneIndices = fBoneIndices;
@@ -706,14 +705,14 @@ void SkinPositionNormalAndTangentSpace(
 						    out float3 worldPos, out float3 worldNormal, 
 							out float3 worldTangentS, out float3 worldTangentT )
 {
-#if !defined( _X360 )
+#if 1
 	int3 boneIndices = D3DCOLORtoUBYTE4( fBoneIndices );
 #else
 	int3 boneIndices = fBoneIndices;
 #endif
 
 	// Needed for invariance issues caused by multipass rendering
-#if defined( _X360 )
+#if 0
 	[isolate] 
 #endif
 	{ 
@@ -776,9 +775,8 @@ float VertexAttenInternal( const float3 worldPos, int lightNum )
 	lightDir *= ooLightDist;
 
 	float3 vDist;
-#	if defined( _X360 )
+#	if 0
 	{
-		//X360 dynamic compile hits an internal compiler error using dst(), this is the breakdown of how dst() works from the 360 docs.
 		vDist.x = 1;
 		vDist.y = lightDistSquared * ooLightDist;
 		vDist.z = lightDistSquared;
@@ -868,7 +866,7 @@ float3 DoLighting( const float3 worldPos, const float3 worldNormal,
 	if( bStaticLight )			// Static light
 	{
 		float3 col = staticLightingColor * cOverbright;
-#if defined ( _X360 )
+#if 0
 		linearColor += col * col;
 #else
 		linearColor += GammaToLinear( col );

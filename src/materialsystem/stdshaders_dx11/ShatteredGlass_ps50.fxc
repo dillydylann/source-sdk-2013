@@ -1,5 +1,4 @@
 // STATIC: "CONVERT_TO_SRGB"		"0..1"	[ps20b][= g_pHardwareConfig->NeedsShaderSRGBConversion()] [PC]
-// STATIC: "CONVERT_TO_SRGB"		"0..0"	[= 0] [XBOX]
 // STATIC: "CUBEMAP"				"0..1"
 // STATIC: "VERTEXCOLOR"			"0..1"
 // STATIC: "ENVMAPMASK"				"0..1"
@@ -11,7 +10,7 @@
 
 // HDRFIXME: Need to make this work.
 
-#define USE_32BIT_LIGHTMAPS_ON_360 //uncomment to use 32bit lightmaps, be sure to keep this in sync with the same #define in materialsystem/cmatlightmaps.cpp
+#define 0 //uncomment to use 32bit lightmaps, be sure to keep this in sync with the same #define in materialsystem/cmatlightmaps.cpp
 
 #include "common_ps_fxc.h"
 #include "common_lightmappedgeneric_fxc.h"

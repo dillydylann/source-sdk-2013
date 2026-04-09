@@ -62,7 +62,7 @@ struct VS_INPUT
 struct VS_OUTPUT
 {
     float4 projPos							: SV_Position;		// Projection-space position
-#if !defined( _X360 )
+#if 1
 	float  fog								: FOG;			// Fixed-function fog factor
 #endif
 	float4 vAmbientOcclUv_fallbackCorneaUv	: TEXCOORD0;	// Base texture coordinate
@@ -117,7 +117,7 @@ VS_OUTPUT main( const VS_INPUT v )
 	
 	o.vWorldPosition_ProjPosZ.w = vProjPos.z;
 
-#if !defined( _X360 )
+#if 1
 	// Set fixed-function fog factor
 	o.fog = CalcFog( vWorldPosition, vProjPos, g_iFogType );
 #endif
