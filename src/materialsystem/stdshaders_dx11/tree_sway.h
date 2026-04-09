@@ -11,7 +11,7 @@
 #define hlsl_float4x3 float4x3
 #endif
 
-// Tree sway vertex animation function. Requires a number of global variables to be defined. See vertexlit_and_unlit_generic_vs20.fxc or depthwrite_vs20.fxc for details.
+// Tree sway vertex animation function. Requires a number of global variables to be defined. See vertexlit_and_unlit_generic_vs50.fxc or depthwrite_vs50.fxc for details.
 
 // Tree sway mode 2:
 // Hacks to use tree sway code on rectangular sheets of plastic/tarp attached at the four corners. 
